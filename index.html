@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ta,en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gulfi Chat — A friendly, intelligent, helpful multilingual AI chatbot supporting English, Tamil, and Tanglish with live India Standard Time (IST).">
+  <title>Gulfi Chat — Friendly & Intelligent Multilingual AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark">
+  <div class="app-layout">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="avatar-glow-ring">
+            <img src="assets/gulfi_avatar.jpg" alt="Gulfi Chat Logo" class="brand-avatar">
+            <span class="online-indicator" title="Gulfi is online"></span>
+          </div>
+          <div class="brand-text">
+            <h2>Gulfi Chat <span class="badge-ai">AI</span></h2>
+            <p>Multilingual Assistant</p>
+          </div>
+        </div>
+        <button id="closeSidebarBtn" class="icon-btn mobile-only" aria-label="Close Sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-action">
+        <button id="newChatBtn" class="btn btn-primary btn-new-chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>New Chat</span>
+        </button>
+      </div>
+
+      <!-- Quick Category Shortcuts -->
+      <div class="sidebar-section-title">Modes & Topics</div>
+      <div class="category-pills">
+        <button class="pill-btn active" data-category="all">
+          <span class="pill-icon">💬</span> All Chats
+        </button>
+        <button class="pill-btn" data-category="coding">
+          <span class="pill-icon">💻</span> Coding & Dev
+        </button>
+        <button class="pill-btn" data-category="exam">
+          <span class="pill-icon">🎓</span> 2/5/13 Marks
+        </button>
+        <button class="pill-btn" data-category="projects">
+          <span class="pill-icon">🚀</span> Project Blueprints
+        </button>
+        <button class="pill-btn" data-category="creative">
+          <span class="pill-icon">✨</span> Captions & Quotes
+        </button>
+      </div>
+
+      <div class="sidebar-section-title">Chat History</div>
+      <div class="chat-history-list" id="chatHistoryList">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="gulfi-status-box">
+          <div class="status-dot"></div>
+          <div class="status-info">
+            <span class="status-title">Gulfi Core 2.0</span>
+            <span class="status-sub">Zero-API Required • Offline Ready</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT CONTAINER -->
+    <main class="chat-main">
+      <!-- TOP NAVBAR -->
+      <header class="chat-header">
+        <div class="header-left">
+          <button id="openSidebarBtn" class="icon-btn mobile-only" aria-label="Open Sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          
+          <div class="header-info">
+            <div class="header-avatar-wrap">
+              <img src="assets/gulfi_avatar.jpg" alt="Gulfi" class="header-avatar">
+              <span class="pulse-ring"></span>
+            </div>
+            <div>
+              <h1 class="chat-title">Gulfi Chat</h1>
+              <span class="chat-subtitle">English • தமிழ் • Tanglish Assistant</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- LIVE IST CLOCK BADGE -->
+          <div class="ist-badge" id="istClockBadge" title="Official India Standard Time (Asia/Kolkata UTC+05:30)">
+            <svg class="ist-clock-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <div class="ist-clock-details">
+              <span class="ist-time" id="istLiveTime">--:--:-- IST</span>
+              <span class="ist-date" id="istLiveDate">Loading IST...</span>
+            </div>
+          </div>
+
+          <!-- Sound FX Toggle -->
+          <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound">
+            <svg id="soundOnIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <svg id="soundOffIcon" class="hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button id="themeToggleBtn" class="icon-btn" title="Switch Theme (Dark/Light)" aria-label="Switch Theme">
+            <svg id="sunIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg id="moonIcon" class="hidden" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+
+          <!-- Export Chat -->
+          <button id="exportChatBtn" class="icon-btn" title="Export Conversation" aria-label="Export Chat">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </button>
+
+          <!-- Settings Button -->
+          <button id="settingsBtn" class="icon-btn" title="Gulfi Settings" aria-label="Open Settings">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- MESSAGES DISPLAY AREA -->
+      <section class="messages-container" id="messagesContainer">
+        <!-- WELCOME HERO STATE (when empty) -->
+        <div class="welcome-hero" id="welcomeHero">
+          <div class="hero-avatar-wrap">
+            <img src="assets/gulfi_avatar.jpg" alt="Gulfi Chat Mascot" class="hero-avatar">
+            <div class="hero-avatar-glow"></div>
+          </div>
+          <h2 class="hero-title">Vanakkam! I'm <span class="gradient-text">Gulfi Chat</span> 😊</h2>
+          <p class="hero-desc">
+            Your friendly, intelligent AI assistant. English, தமிழ், Tanglish — எதுல வேணாலும் கேட்கலாம்!
+          </p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <span class="feat-icon">🗣️</span>
+              <h4>Tanglish & Tamil</h4>
+              <p>"Ennaku HTML basics sollu" nu natural-aa pesalam.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feat-icon">⏰</span>
+              <h4>Accurate IST Time</h4>
+              <p>Asia/Kolkata live clock & date calculations.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feat-icon">🎓</span>
+              <h4>Exam Power Mode</h4>
+              <p>2-mark, 5-mark, and 13-mark structured university answers.</p>
+            </div>
+            <div class="feature-card">
+              <span class="feat-icon">💻</span>
+              <h4>Code & Projects</h4>
+              <p>Clean code with copy buttons & full project roadmaps.</p>
+            </div>
+          </div>
+
+          <div class="quick-prompt-section">
+            <span class="quick-title">⚡ Try these quick prompts:</span>
+            <div class="quick-prompts-list">
+              <button class="quick-prompt-pill" data-prompt="Ennaku HTML basics sollu da">
+                💡 "Ennaku HTML basics sollu da"
+              </button>
+              <button class="quick-prompt-pill" data-prompt="Ippo current IST time enna?">
+                ⏰ "Ippo current IST time enna?"
+              </button>
+              <button class="quick-prompt-pill" data-prompt="2 mark question: Define Polymorphism in OOP">
+                🎓 "2-Mark: Define Polymorphism"
+              </button>
+              <button class="quick-prompt-pill" data-prompt="College hackathon-ku oru super AI project blueprint tharuva?">
+                🚀 "Hackathon AI Project Blueprint"
+              </button>
+              <button class="quick-prompt-pill" data-prompt="Instagram travel photo-ku stylish Tamil / English caption ezhuthu">
+                ✨ "Instagram Aesthetic Caption"
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat messages will be injected here -->
+        <div class="chat-stream" id="chatStream"></div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator hidden" id="typingIndicator">
+          <div class="bot-bubble-avatar">
+            <img src="assets/gulfi_avatar.jpg" alt="Gulfi">
+          </div>
+          <div class="typing-bubble">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <span class="typing-text">Gulfi is thinking...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- INPUT BAR & ACTIONS -->
+      <footer class="chat-input-area">
+        <!-- Floating Prompt Pills -->
+        <div class="floating-pills-bar" id="floatingPillsBar">
+          <button class="float-pill" data-prompt="Center a div in CSS epdi pandrathu?">🎨 Center a div in CSS</button>
+          <button class="float-pill" data-prompt="13 mark question: Explain Operating System Architecture">🎓 13-Mark: OS Architecture</button>
+          <button class="float-pill" data-prompt="Python-la calculator program sollu">🐍 Python Calculator</button>
+          <button class="float-pill" data-prompt="SQL 2nd highest salary query">🗄️ SQL Highest Salary</button>
+          <button class="float-pill" data-prompt="Bore adikuthu da!">🎮 Bore adikuthu da!</button>
+        </div>
+
+        <form class="chat-form" id="chatForm" onsubmit="return false;">
+          <div class="input-wrapper">
+            <textarea
+              id="chatInput"
+              rows="1"
+              placeholder="Ask Gulfi in English, தமிழ், or Tanglish... (e.g. 'HTML basics sollu da')"
+              autocomplete="off"
+            ></textarea>
+
+            <div class="input-actions-right">
+              <!-- Speech-to-Text Mic Button -->
+              <button type="button" id="micBtn" class="action-btn mic-btn" title="Speak to Gulfi (Tamil/English Voice Input)" aria-label="Speech Input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              </button>
+
+              <!-- Send Button -->
+              <button type="submit" id="sendBtn" class="action-btn send-btn" title="Send message (Enter)" aria-label="Send Message">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="input-footer-caption">
+          <span>Gulfi Chat • Asia/Kolkata (IST) • Press <strong>Enter</strong> to send, <strong>Shift+Enter</strong> for newline</span>
+        </div>
+      </footer>
+    </main>
+
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay hidden" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <h3>Gulfi Chat Settings</h3>
+        </div>
+        <button id="closeSettingsBtn" class="icon-btn" aria-label="Close Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="alert-info-box">
+          <span class="info-icon">💡</span>
+          <div>
+            <strong>Zero API Requirement:</strong> Gulfi Chat is pre-loaded with an offline Tanglish/Tamil/English intelligence engine and live IST clock. No API key is required to use Gulfi Chat!
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h4>🔊 Voice & Speech</h4>
+          <label class="setting-row">
+            <span>Text-to-Speech Output</span>
+            <input type="checkbox" id="ttsCheckbox" checked>
+          </label>
+          <label class="setting-row">
+            <span>Subtle Sound Effects</span>
+            <input type="checkbox" id="soundEffectsCheckbox" checked>
+          </label>
+        </div>
+
+        <div class="settings-group">
+          <h4>⚡ Optional External AI Endpoint (Advanced)</h4>
+          <p class="settings-subtext">Optional. If you want to connect Gulfi to Groq, OpenRouter, Together AI, or local Ollama, configure below:</p>
+          
+          <label class="input-label">Endpoint URL (OpenAI-compatible /chat/completions)</label>
+          <input type="text" id="apiEndpointInput" class="text-input" placeholder="e.g. https://api.groq.com/openai/v1/chat/completions">
+
+          <label class="input-label">API Key (Stored locally in your browser)</label>
+          <input type="password" id="apiKeyInput" class="text-input" placeholder="Optional API Key">
+
+          <label class="input-label">Model Name</label>
+          <input type="text" id="apiModelInput" class="text-input" placeholder="e.g. llama-3.3-70b-versatile or mistral">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="resetChatBtn" class="btn btn-danger">Clear All Chats</button>
+        <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="gulfi-brain.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

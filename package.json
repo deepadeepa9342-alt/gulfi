@@ -1,0 +1,13 @@
+{
+  "name": "gulfi-chat",
+  "version": "1.0.0",
+  "description": "Gulfi Chat — Friendly, intelligent, helpful AI chatbot supporting English, Tamil, and Tanglish with Live IST Time.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["ai", "chatbot", "gulfi", "tanglish", "tamil", "ist"],
+  "author": "Gulfi AI",
+  "license": "MIT"
+}
